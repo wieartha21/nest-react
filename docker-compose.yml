@@ -1,0 +1,70 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    container_name: nestjs-api-db
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=nestjs_react
+      - MYSQL_ROOT_PASSWORD=mauFJcuf5dhRMQrjj
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./mysqldb:/var/lib/mysql
+    networks:
+      - javascript-network
+
+  nest-api:
+    container_name: nestjs-api-dev
+    # image: nestjs-api-dev:1.0.0
+    build:
+        context: .
+        target: backend
+        dockerfile: ./Dockerfile
+    command: npm run start:dev
+    ports:
+        - 3030:3030
+        - 9229:9229
+    volumes:
+        - ./backend:/usr/src/app
+        - /usr/src/app/node_modules
+    restart: always
+    networks:
+      - javascript-network
+    
+  frontend:
+    container_name: react-front-dev
+    # image: nestjs-api-dev:1.0.0
+    build:
+        context: .
+        target: frontend
+        dockerfile: ./Dockerfile 
+    ports:
+        - 3000:3000
+    volumes:
+        - ./frontend:/usr/src/app
+        - /usr/src/app/node_modules
+    restart: always
+    networks:
+      - javascript-network
+
+  adminer:
+    image: adminer:latest
+    restart: unless-stopped
+    ports:
+      - 8787:8080
+    depends_on:
+      - db
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    networks:
+      - javascript-network
+
+volumes:
+  db:
+    driver: local
+networks:
+  javascript-network:
+    driver: bridge
