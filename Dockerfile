@@ -36,5 +36,7 @@ COPY ./frontend .
 
 RUN npm ci   
 RUN npm install -g typescript 
+#For Development only
+RUN react-scripts start
 
-CMD ["npm", "run", "start"]
+# CMD ["npm", "run", "start"]
