@@ -8,11 +8,10 @@ import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
 
- 
 @Module({
-  imports: [
+  imports: [ 
     ConfigModule.forRoot({
-        isGlobal: true,
+      isGlobal : true
     }),
     UserModule,
     PassportModule,

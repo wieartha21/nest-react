@@ -4,21 +4,21 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 export class Todo {
   
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column()
   title: string;
 
   @Column()
-  description: string;
+  description?: string;
 
   @Column()
-  status: string;
+  status?: string;
 
   @CreateDateColumn()
-  created_at: Date; // Creation date
+  created_at?: Date; // Creation date
   
   @UpdateDateColumn()
-  updated_at: Date; // Last updated date
+  updated_at?: Date; // Last updated date
  
 }

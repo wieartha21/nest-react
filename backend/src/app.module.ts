@@ -5,11 +5,14 @@ import { AppService } from './app.service';
 import { TodoModule } from './modules/todo/todo.module'; 
 import { AuthrMiddleware } from './middleware/auth.middleware' 
 import { UserModule } from './modules/users/users.module'; 
-import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+
 
 @Module({
-  imports: [ ConfigModule.forRoot(),TodoModule, ConnectModule, UserModule, AuthModule ],
+  imports: [ ConfigModule.forRoot({
+    isGlobal : true
+  }),TodoModule, ConnectModule, UserModule, AuthModule ],
   controllers: [AppController],
   providers: [AppService],
 })
